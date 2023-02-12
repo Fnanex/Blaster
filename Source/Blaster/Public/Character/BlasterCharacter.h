@@ -46,5 +46,9 @@ private:
 	/** Camera that renders what character see. */
 	UPROPERTY(VisibleAnywhere, Category = "Camera")
 	class UCameraComponent* FollowCamera;
+
+	/** Overhead widget to spawn. */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess))
+	class UWidgetComponent* OverheadWidget;
 	
 };

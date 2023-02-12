@@ -3,7 +3,9 @@
 
 #include "Character/BlasterCharacter.h"
 
+#include "Blueprint/UserWidget.h"
 #include "Camera/CameraComponent.h"
+#include "Components/WidgetComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 
@@ -27,6 +29,10 @@ ABlasterCharacter::ABlasterCharacter()
 
 	// Movement component
 	GetCharacterMovement()->bOrientRotationToMovement = true;
+
+	// Widget components
+	OverheadWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("OverheadWidget"));
+	OverheadWidget->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned
