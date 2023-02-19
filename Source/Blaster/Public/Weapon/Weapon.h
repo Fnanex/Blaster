@@ -7,7 +7,7 @@
 #include "Weapon.generated.h"
 
 /**
- * Weapon state, i.g equipped/dropped and others.
+ * Weapon state, i.e equipped/dropped and others.
  */
 UENUM(BlueprintType)
 enum class EWeaponState : uint8
@@ -37,15 +37,22 @@ public:
 	// Sets default values for this actor's properties
 	AWeapon();
 
+	/** Choose show pickup widget or don't. */
+	void ShowPickupWidget(bool bShowWidget);
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	/** On area sphere overlaps. */
 	UFUNCTION()
-	virtual void OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* PrimitiveComp, 
+	virtual void OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* PrimitiveComp, 
 		int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
+	/** On area end overlaps. */
+	UFUNCTION()
+	virtual void OnSphereEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* PrimitiveComp, int32 OtherBodyIndex);
+	
 private:
 	/** This weapon mesh. */
 	UPROPERTY(VisibleAnywhere, Category = "Weapon Properties")

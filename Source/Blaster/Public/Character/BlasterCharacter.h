@@ -19,24 +19,27 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	/** Move forward (1.0) and backward (-1.0). */
+	/** Move forward and backward. */
 	void MoveForward(float Value);
 
-	/** Move right (1.0) and left (-1.0). */
+	/** Move right and left. */
 	void MoveRight(float Value);
 
-	/** Turn camera boom right (1.0) and left (-1.0). */
+	/** Turn camera boom right and left. */
 	void Turn(float Value);
 
-	/** Turn camera boom up (1.0) and down (-1.0). */
+	/** Turn camera boom up and down. */
 	void LookUp(float Value);
-	
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	/** Called when this object begins replicating to initialize the state of custom property conditions. */
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	
 private:
 	/** Arm that takes the camera for third person view effect. */
@@ -50,5 +53,17 @@ private:
 	/** Overhead widget to spawn. */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess))
 	class UWidgetComponent* OverheadWidget;
+
+	/** Weapon that takes character in hands. */
+	UPROPERTY(ReplicatedUsing = OnRep_OverlappingWeapon)
+	class AWeapon* OverlappingWeapon;
 	
+	/** On replicate overlapping weapon for owner client. */
+	UFUNCTION()
+	void OnRep_OverlappingWeapon(AWeapon* LastWeapon);
+
+public:
+	/** Set new overlapping weapon. */
+	void SetOverlappingWeapon(AWeapon* Weapon);
+
 };
